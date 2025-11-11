@@ -13,8 +13,11 @@ By querying the dataset, we uncover how factors such as gender, BMI, age, hypert
 ## 2. Dataset description
 This dataset includes patient health records accross different continent with the follwing attributes:**year
 *gender
+
 *age
+
 location
+
 *race:AfricanAmerican,race:Asian,race:Caucasian,race:Hispanic,race:Other
 *hypertension
 *heart_disease
