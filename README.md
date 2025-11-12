@@ -44,6 +44,7 @@ I harnessed the power of several key tools:
 - **SQL:** The backbone of my analysis, enabling me to query the database and extract critical insights.
 - **PostgreSQL:** My preferred database management system, ideal for handling and organizing complex datasets.
 - **Visual Studio Code:** My go-to environment for database management and executing SQL queries efficiently.
+- **Python:** Pandas, Matplotlib, Seaborn
 - **GitHub:** Essential for version control and sharing my SQL scripts and analysis, ensuring collaboration, transparency, and project tracking.
 - **Excel/CSV:** Used for Editing and Cleaning of the dataset, helping to structure the data properly before deeper analysis.
 
@@ -62,6 +63,8 @@ from DIABETICS_db
 GROUP by Diabetics
 ORDER by Num_Patients DESC;
 ```
+![Diabetic vs Non-Diabetic](PROJECTS\01_Asset.png)
+
 ### ✅ 2. Average BMI by Diabetes Status  
 **Approach:**  
 Use `AVG()` and group by diabetes flag to compare BMI between groups.  
@@ -74,6 +77,8 @@ FROM DIABETICS_db
 GROUP BY DIABETICS
 ORDER BY AVG_BMI
 ```
+![Average BMI](PROJECTS\02_asset.png)
+
 ### ✅ 3. Diabetes Prevalence by Gender  
 **Approach:**  
 Filter diabetics only, then count by gender.  
@@ -88,17 +93,29 @@ WHERE DIABETICS = 1
 GROUP BY Gender
 ORDER BY prevalence_percent DESC;
 ```
+![Diabetes by Gender](PROJECTS\03_Asset.png)
+
 ### ✅ 4. Comorbidities Among Diabetics  
 **Approach:**  
 Check how many diabetics also have hypertension or heart disease using conditional filtering.  
 This highlights high-risk subsets.
 ```sql
 SELECT 
-    COUNT(*) AS diabetic_with_comorbidity
+   'Hypertension' as condition,COUNT(*) AS count
 FROM DIABETICS_db
 WHERE DIABETICS = 1 
-  AND (Hypertension = 1 OR heart_disease = 1);
+  and Hypertension = 1 
+ 
+UNION ALL 
+
+SELECT 
+   'Heart_Disease' as condition,COUNT(*) AS count
+FROM DIABETICS_db
+WHERE DIABETICS = 1 
+  and heart_disease = 1;
 ```
+![Comorbidities](PROJECTS\04_Asset.png)
+
 ### ✅ 5. Age Group Analysis  
 **Approach:**  
 Create age ranges using `CASE` and compute average blood glucose per group.  
@@ -120,6 +137,8 @@ SELECT *
 FROM AGE_GROUPS
 ORDER BY AVG_BGL DESC;
 ```
+![AGE_GROUP](PROJECTS\05_Asset.png)
+
 ### ✅ 6. Location-Based Prevalence  
 **Approach:**  
 Group diabetics by location and identify hotspot areas.  
@@ -156,5 +175,7 @@ FROM (
 GROUP BY BMI_Category
 ORDER BY BMI_Category;
 ```
+![BMI Categories](PROJECTS\07_Asset.png)
+
 
 
