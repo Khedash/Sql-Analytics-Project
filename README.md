@@ -63,7 +63,7 @@ from DIABETICS_db
 GROUP by Diabetics
 ORDER by Num_Patients DESC;
 ```
-![Diabetic vs Non-Diabetic](PROJECTS\01_Asset.png)
+![Diabetic vs Non-Diabetic](https://github.com/Khedash/Sql-Analytics-Project/blob/main/PROJECTS/01_Asset.png)
 
 ### ✅ 2. Average BMI by Diabetes Status  
 **Approach:**  
