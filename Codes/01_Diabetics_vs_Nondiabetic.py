@@ -11,7 +11,7 @@ engine = create_engine('postgresql+psycopg2://postgres:1943@localhost/postgres')
 query = """
 SELECT 
     CASE 
-        WHEN diabetics = 1 THEN 'Diabetic'
+        WHEN diabetes = 1 THEN 'Diabetic'
         ELSE 'Non-Diabetic'
     END AS diabetes_status,
     COUNT(*) AS num_patients

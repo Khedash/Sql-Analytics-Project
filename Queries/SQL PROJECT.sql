@@ -110,7 +110,7 @@ FROM DIABETICS_db
 WHERE DIABETICS = 1
 GROUP BY LOCATION
 ORDER BY COUNT DESC
-LIMIT 1
+LIMIT 10
 
 --7  * BMI categories vs diabetes status
 WITH BMI_GROUPING AS (
@@ -147,7 +147,37 @@ FROM (
 GROUP BY BMI_Category
 ORDER BY BMI_Category;
 
-GUY TELL ME THE TRUTH, BLUNT HONEST TRUTH. I DONT WORTH POSTING THIS ON MY PORTFOLIO RIGHT BECAUSE YOU ADJUSTED MAJORITY
+---highest continent
+
+with CONTINENT AS (SELECT 'Asian' AS race, COUNT(*) AS total_people,
+       SUM(diabetics) AS diabetics_count,
+       ROUND(SUM(diabetics)*100.0/COUNT(*),2) AS diabetes_prevalence_percentage
+FROM DIABETICS_db
+WHERE r_asian = 1
+UNION ALL
+SELECT 'AfricanAmerican', COUNT(*), SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_africanamerican = 1
+UNION ALL
+SELECT 'Caucasian', COUNT(*), SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_caucasian = 1
+UNION ALL
+SELECT 'Hispanic', COUNT(*), SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_hispanic = 1
+UNION ALL
+SELECT 'Other', COUNT(*), SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_other = 1
+ORDER BY diabetes_prevalence_percentage DESC
+)
+SELECT * FROM CONTINENT 
+ORDER BY  diabetics_count DESC
+limit 1
+
+
+
 
 SELECT 
    'Hypertension' as condition,COUNT(*) AS count
@@ -164,3 +194,15 @@ WHERE DIABETICS = 1
   and heart_disease = 1;
 
 SELECT 'Hypertension'as condition from DIABETICS_db
+
+
+
+SELECT 
+    COUNT(*) AS total_people,
+    SUM(CASE WHEN DIABETICS = 1 THEN 1 ELSE 0 END) AS diabetics_count,
+    ROUND(
+        SUM(CASE WHEN DIABETICS = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(*),
+        2
+    ) AS diabetes_prevalence_percentage
+FROM DIABETICS_db
+ORDER BY total_people,diabetes_prevalence_percentage DESC
