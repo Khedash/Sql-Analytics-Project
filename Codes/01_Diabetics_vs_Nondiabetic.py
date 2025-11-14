@@ -34,21 +34,3 @@ plt.show()
 
 
 
-# Count number of diabetics (1) and non-diabetics (0) by gender
-gender_counts = df.groupby(['Gender', 'diabetes']).size().unstack(fill_value=0)
-gender_counts
-# Create bar chart
-gender_counts.plot(kind='bar', figsize=(7,5), color=['skyblue', 'salmon'])
-
-# Add chart details
-plt.title('Diabetes Prevalence by Gender')
-plt.xlabel('Gender')
-plt.ylabel('Number of Patients')
-plt.xticks(rotation=0)
-plt.legend(['Non-Diabetic', 'Diabetic'])
-plt.grid(axis='y', linestyle='--', alpha=0.7)
-
-# Save image
-plt.tight_layout()
-plt.savefig("assets/diabetes_gender.png")
-plt.show()
