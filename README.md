@@ -51,10 +51,16 @@ I harnessed the power of several key tools:
 ---
 ## 6. Project Structure
 Sql-Analytics-Project/
-│
-├── Charts/               → All visualizations generated from SQL and Python
-├── Sql_project/          → SQL query scripts
-├── diabetes_dataset.csv  → Dataset used for analysis
+│  
+
+├── Charts/                → All visualizations generated from SQL and Python  
+
+├── Sql_project/          → SQL query scripts  
+
+├── Codes                 → Python scripts or Jupyter notebooks for data processing & visualization           
+
+├── diabetes_dataset.csv  → Dataset used for analysis  
+
 └── README.md             → Project documentation
 ---
 
