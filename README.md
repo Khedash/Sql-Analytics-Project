@@ -4,15 +4,15 @@
 ---
 
 ## 1.  Introduction
-This project explores a diabetes dataset containing patient demographic and clinical information.  
-The goal is to identify patterns, trends, and risk indicators related to diabetes using SQL.  
-By querying the dataset, we uncover how factors such as gender, BMI, age, hypertension, and heart disease relate to diabetes prevalence.
-- SQL Queries? check them out here:[Sql_project][/]
+This project explores a comprehensive diabetes dataset containing patient demographic and clinical information.
+Using SQL and PostgreSQL, the goal is to uncover patterns, trends, and potential risk indicators associated with diabetes.  
+By querying the dataset, we uncover how factors such as gender, BMI, age, hypertension, and heart_disease relate to diabetes prevalence.
+- **SQL Queries:** Check them out here → [SQL Scripts](Sql_project/)
 
 ---
 
 ## 2. Dataset description
-This dataset includes patient health records accross different continent with the follwing attributes:
+This dataset includes patient health records across different continent with the following attributes:
 - year
 - gender
 - age
@@ -32,7 +32,7 @@ The analysis aims to answer the following questions:
 1. How many patients are diabetic vs non-diabetic?
 2. What is the average BMI by diabetes status?
 3. What is the diabetes prevalence by gender?
-4. How many diabetic patients also have hypertension or heart disease?
+4. How many diabetic patients also have hypertension or heart_disease?
 5. Which age group has the highest average blood glucose?
 6. Which locations have the most diabetic patients?
 7. What is the relationship between BMI categories and diabetes status?
@@ -46,9 +46,18 @@ I harnessed the power of several key tools:
 - **Visual Studio Code:** My go-to environment for database management and executing SQL queries efficiently.
 - **Python:** Pandas, Matplotlib, Seaborn
 - **GitHub:** Essential for version control and sharing my SQL scripts and analysis, ensuring collaboration, transparency, and project tracking.
-- **Excel/CSV:** Used for Editing and Cleaning of the dataset, helping to structure the data properly before deeper analysis.
+- **Excel/CSV:** Used for editing and cleaning of the dataset, helping to structure the data properly before deeper analysis.
 
 ---
+## 6. Project Structure
+Sql-Analytics-Project/
+│
+├── Charts/               → All visualizations generated from SQL and Python
+├── Sql_project/          → SQL query scripts
+├── diabetes_dataset.csv  → Dataset used for analysis
+└── README.md             → Project documentation
+---
+
 ## 5. SQL Analysis & Insights
 
 ### ✅ 1. How many patients are diabetic vs non-diabetic?
@@ -63,7 +72,7 @@ from DIABETICS_db
 GROUP by Diabetics
 ORDER by Num_Patients DESC;
 ```
-![Diabetic vs Non-Diabetic](https://github.com/Khedash/Sql-Analytics-Project/blob/main/PROJECTS/01_Asset.png)
+![Diabetic vs Non-Diabetic](Charts/01_Asset.png)
 
 ### ✅ 2. Average BMI by Diabetes Status  
 **Approach:**  
@@ -77,7 +86,7 @@ FROM DIABETICS_db
 GROUP BY DIABETICS
 ORDER BY AVG_BMI
 ```
-![Average BMI](PROJECTS\02_asset.png)
+![Average BMI](Charts/02_asset.png)
 
 ### ✅ 3. Diabetes Prevalence by Gender  
 **Approach:**  
@@ -93,7 +102,7 @@ WHERE DIABETICS = 1
 GROUP BY Gender
 ORDER BY prevalence_percent DESC;
 ```
-![Diabetes by Gender](PROJECTS\03_Asset.png)
+![Diabetes by Gender](Charts/03_Asset.png)
 
 ### ✅ 4. Comorbidities Among Diabetics  
 **Approach:**  
@@ -114,7 +123,7 @@ FROM DIABETICS_db
 WHERE DIABETICS = 1 
   and heart_disease = 1;
 ```
-![Comorbidities](PROJECTS\04_Asset.png)
+![Comorbidities](Charts/04_Asset.png)
 
 ### ✅ 5. Age Group Analysis  
 **Approach:**  
@@ -137,20 +146,20 @@ SELECT *
 FROM AGE_GROUPS
 ORDER BY AVG_BGL DESC;
 ```
-![AGE_GROUP](PROJECTS\05_Asset.png)
+![AGE_GROUP](Charts/05_Asset.png)
 
 ### ✅ 6. Location-Based Prevalence  
 **Approach:**  
 Group diabetics by location and identify hotspot areas.  
 Good for geographical risk analysis.
 ```sql
-### SELECT LOCATION, COUNT(DIABETICS) AS COUNT,ROUND( (COUNT(*) * 100.0) / 
+ SELECT LOCATION, COUNT(DIABETICS) AS COUNT,ROUND( (COUNT(*) * 100.0) / 
 (SELECT COUNT(*) FROM DIABETICS_db WHERE DIABETICS = 1), 2 ) AS percentage_of_diabetics
 FROM DIABETICS_db
 WHERE DIABETICS = 1
 GROUP BY LOCATION
 ORDER BY COUNT DESC
-LIMIT 1;
+LIMIT 10;
 ```
 ✅ 7. BMI Categories  
 **Approach:**  
@@ -175,7 +184,20 @@ FROM (
 GROUP BY BMI_Category
 ORDER BY BMI_Category;
 ```
-![BMI Categories](PROJECTS\07_Asset.png)
+![BMI Categories](Charts/07_Asset.png)
+---
+
+## 7. Key Insights & Conclusion
+
+- Diabetics had a higher average BMI than non-diabetics.
+- Females showed the highest diabetes prevalence.
+- Hypertension and heart disease were more common among diabetic patients.
+- The age group **61–80**  had the highest blood glucose levels.
+- Certain geographical locations appear to have higher concentrations of diabetics.
+- Obesity had a strong association with diabetes cases.
+
+The analysis provides insight into risk factors and patterns that can support public health monitoring and early intervention strategies.
+
 
 
 
