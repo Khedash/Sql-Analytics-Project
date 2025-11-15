@@ -5,19 +5,19 @@
 
 ## 1.  Introduction
 This project explores a comprehensive diabetes dataset containing patient demographic and clinical information.
-Using SQL and PostgreSQL, the goal is to uncover patterns, trends, and potential risk indicators associated with diabetes.  
+Using SQL and PostgreSQL,this projects uncover patterns, trends, and potential risk indicators associated with diabetes.  
 By querying the dataset, we uncover how factors such as gender, BMI, age, hypertension, and heart_disease relate to diabetes prevalence.
 - **SQL Queries:** Check them out here → [SQL Scripts](Sql_project/)
 
 ---
 
 ## 2. Dataset description
-This dataset includes patient health records across different continent with the following attributes:
+This dataset includes patient health records across different continents with the following attributes:
 - year
 - gender
 - age
 - location
-- race:AfricanAmerican,race:Asian,race:Caucasian,race:Hispanic,race:Other
+- race:AfricanAmerican, race:Asian, race:Caucasian, race:Hispanic, race:Other
 - hypertension
 - heart_disease
 - smoking_history
@@ -35,7 +35,8 @@ The analysis aims to answer the following questions:
 4. How many diabetic patients also have hypertension or heart_disease?
 5. Which age group has the highest average blood glucose?
 6. Which locations have the most diabetic patients?
-7. What is the relationship between BMI categories and diabetes status?
+7. What is the relationship between BMI categories and diabetes status?  
+8.Which racial groups have the highest diabetes prevalence? 
 ---
 
 ## 4. Tools Used
@@ -46,16 +47,16 @@ I harnessed the power of several key tools:
 - **Visual Studio Code:** My go-to environment for database management and executing SQL queries efficiently.
 - **Python:** Pandas, Matplotlib, Seaborn
 - **GitHub:** Essential for version control and sharing my SQL scripts and analysis, ensuring collaboration, transparency, and project tracking.
-- **Excel/CSV:** Used for editing and cleaning of the dataset, helping to structure the data properly before deeper analysis.
+- **Excel/CSV:** Used for editing and cleaning the dataset, helping to structure the data properly before deeper analysis.
 
 ---
-## 6. Project Structure
+## 5. Project Structure
 Sql-Analytics-Project/
 │  
 
 ├── Charts/                → All visualizations generated from SQL and Python  
 
-├── Sql_project/          → SQL query scripts  
+├── Queries/               → SQL query scripts  
 
 ├── Codes                 → Python scripts or Jupyter notebooks for data processing & visualization           
 
@@ -64,7 +65,7 @@ Sql-Analytics-Project/
 └── README.md             → Project documentation
 ---
 
-## 5. SQL Analysis & Insights
+## 6. SQL Analysis & Insights
 
 ### ✅ 1. How many patients are diabetic vs non-diabetic?
 Group patients by diabetes status and count.  
@@ -139,7 +140,7 @@ This reveals the age category most at risk.
 WITH AGE_GROUPS AS (
     SELECT 
         CASE WHEN AGE BETWEEN 0 AND 19 THEN '0-19'  
-            WHEN AGE BETWEEN 20 AND 40 THEN '21-40' 
+            WHEN AGE BETWEEN 20 AND 40 THEN '20-40' 
             WHEN AGE BETWEEN 41 AND 60 THEN '41-60'
             WHEN AGE BETWEEN 61 AND 80 THEN '61-80'  
             ELSE '81 +'
@@ -167,7 +168,7 @@ GROUP BY LOCATION
 ORDER BY COUNT DESC
 LIMIT 10;
 ```
-✅ 7. BMI Categories  
+### ✅ 7. BMI Categories  
 **Approach:**  
 Convert BMI into categories using `CASE`, then compare diabetic vs non-diabetic counts.  
 This supports understanding of how weight relates to diabetes.
@@ -192,17 +193,48 @@ ORDER BY BMI_Category;
 ```
 ![BMI Categories](Charts/07_Asset.png)
 ---
+### ✅ 8. Diabetic Prevalence by Race.
+**Approach:**  
+Identified and summed all confirmed diabetic patients within each racial group.  
+Calculated the prevalence percentage for each race by dividing diabetic counts by the total population in that race.  
+Applied ORDER BY to rank the racial groups from highest to lowest diabetes prevalence.   
 
+``` sql
+SELECT 'Asian' AS race, 
+       SUM(diabetics) AS diabetics_count,
+       ROUND(SUM(diabetics)*100.0/COUNT(*),2) AS diabetes_prevalence_percentage
+FROM DIABETICS_db
+WHERE r_asian = 1
+UNION ALL
+SELECT 'AfricanAmerican', SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_africanamerican = 1
+UNION ALL
+SELECT 'Caucasian', SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_caucasian = 1
+UNION ALL
+SELECT 'Hispanic', SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_hispanic = 1
+UNION ALL
+SELECT 'Other', SUM(diabetics), ROUND(SUM(diabetics)*100.0/COUNT(*),2)
+FROM DIABETICS_db
+WHERE r_other = 1
+ORDER BY diabetes_prevalence_percentage DESC
+```
+![Race_Ranking](Charts/08_Asset.png)
+---
 ## 7. Key Insights & Conclusion
-
-- Diabetics had a higher average BMI than non-diabetics.
-- Females showed the highest diabetes prevalence.
-- Hypertension and heart disease were more common among diabetic patients.
-- The age group **61–80**  had the highest blood glucose levels.
-- Certain geographical locations appear to have higher concentrations of diabetics.
-- Obesity had a strong association with diabetes cases.
-
-The analysis provides insight into risk factors and patterns that can support public health monitoring and early intervention strategies.
+- Diabetic patients had a higher average BMI compared to non-diabetic individuals.
+- Females recorded the highest prevalence of diabetes across all gender groups.
+- Hypertension and heart disease were more common among diabetic patients, suggesting strong comorbid relationships.
+- Individuals within the 61–80 age group showed the highest blood glucose levels, indicating increased risk with aging.
+- Certain geographical locations showed higher concentrations of diabetic cases, pointing to possible environmental or lifestyle     influences.
+- Obesity was strongly associated with diabetes, reinforcing its role as a significant risk factor.
+- The African American group had the highest diabetes prevalence rate among all racial categories.  
+---
+ This project demonstrates the power of SQL and data analytics in identifying health trends that can guide clinical and public health decision, while also support public health monitoring and early intervention strategies.
 
 
 
