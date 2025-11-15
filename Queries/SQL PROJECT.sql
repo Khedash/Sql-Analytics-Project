@@ -147,7 +147,7 @@ FROM (
 GROUP BY BMI_Category
 ORDER BY BMI_Category;
 
----highest continent
+---8 Which racial groups have the highest diabetes prevalence?
 
 with CONTINENT AS (SELECT 'Asian' AS race, COUNT(*) AS total_people,
        SUM(diabetics) AS diabetics_count,
