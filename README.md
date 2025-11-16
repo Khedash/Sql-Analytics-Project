@@ -50,22 +50,8 @@ I harnessed the power of several key tools:
 - **Excel/CSV:** Used for editing and cleaning the dataset, helping to structure the data properly before deeper analysis.
 
 ---
-## 5. Project Structure
-Sql-Analytics-Project/
-│  
 
-├── Charts/                → All visualizations generated from SQL and Python  
-
-├── Queries/               → SQL query scripts  
-
-├── Codes                 → Python scripts or Jupyter notebooks for data processing & visualization           
-
-├── diabetes_dataset.csv  → Dataset used for analysis  
-
-└── README.md             → Project documentation
----
-
-## 6. SQL Analysis & Insights
+## 5. SQL Analysis & Insights
 
 ### ✅ 1. How many patients are diabetic vs non-diabetic?
 Group patients by diabetes status and count.  
@@ -225,7 +211,7 @@ ORDER BY diabetes_prevalence_percentage DESC
 ```
 ![Race_Ranking](Charts/08_Asset.png)
 ---
-## 7. Key Insights & Conclusion
+## 6. Key Insights & Conclusion
 - Diabetic patients had a higher average BMI compared to non-diabetic individuals.
 - Females recorded the highest prevalence of diabetes across all gender groups.
 - Hypertension and heart disease were more common among diabetic patients, suggesting strong comorbid relationships.
